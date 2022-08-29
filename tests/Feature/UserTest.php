@@ -51,3 +51,8 @@ it('can\'t create user data (user not manager)', function (User $user, User $emp
             'password' => Str::random(10),
         ])->assertForbidden();
 })->with('user', 'user_employee');
+
+it('can\'t create user data (unauthorized)', function () {
+    getJson(route('api.users.store'))
+        ->assertUnauthorized();
+});
