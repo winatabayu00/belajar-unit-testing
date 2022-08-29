@@ -32,7 +32,7 @@ it('can access user data (user is manager)', function (User $manager) {
 it('can create user data (user is manager)', function (User $manager) {
     actingAs($manager)
         ->postJson(route('api.users.store'), [
-            'name' => faker()->name . ' Bayu',
+            'name' => faker()->name,
             'email' => faker()->email(),
             'password' => Hash::make(faker()->password(10)),
         ])->assertCreated();
@@ -41,13 +41,13 @@ it('can create user data (user is manager)', function (User $manager) {
 it('can\'t create user data (user not manager)', function (User $user, User $employee) {
     actingAs($user)
         ->postJson(route('api.users.store'), [
-            'name' => faker()->name . ' Bayu',
+            'name' => faker()->name,
             'email' => faker()->email(),
             'password' => faker()->password(10),
         ])->assertForbidden();
     actingAs($employee)
         ->postJson(route('api.users.store'), [
-            'name' => faker()->name . ' Bayu',
+            'name' => faker()->name,
             'email' => faker()->email(),
             'password' => faker()->password(10),
         ])->assertForbidden();
@@ -55,7 +55,7 @@ it('can\'t create user data (user not manager)', function (User $user, User $emp
 
 it('can\'t create user data (unauthorized)', function () {
     postJson(route('api.users.store'), [
-        'name' => faker()->name . ' Bayu',
+        'name' => faker()->name,
         'email' => faker()->email(),
         'password' => faker()->password(10),
     ])->assertUnauthorized();
