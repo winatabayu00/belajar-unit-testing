@@ -48,6 +48,10 @@ class UserController extends Controller
 
         try {
             User::query()->create($validator);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'New data user created!.'
+            ], 201);
         } catch (\Throwable $th) {
             throw $th;
         }
