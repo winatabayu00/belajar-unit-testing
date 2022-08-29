@@ -5,6 +5,8 @@ use App\Models\User;
 use function Pest\Faker\faker;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\getJson;
+use function Pest\Laravel\postJson;
+
 use Illuminate\Support\Str;
 
 it('can\'t access user data (unauthorized)', function () {
@@ -53,6 +55,9 @@ it('can\'t create user data (user not manager)', function (User $user, User $emp
 })->with('user', 'user_employee');
 
 it('can\'t create user data (unauthorized)', function () {
-    getJson(route('api.users.store'))
-        ->assertUnauthorized();
+    postJson(route('api.users.store'), [
+        'name' => faker()->name . ' Bayu',
+        'email' => faker()->email(),
+        'password' => Str::random(10),
+    ])->assertUnauthorized();
 });
