@@ -40,7 +40,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $request->validate([
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        try {
+            User::query()->create($validator);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
